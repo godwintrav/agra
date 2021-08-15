@@ -1,0 +1,73 @@
+import 'package:agraapp/pages/farmer/farmer_dashboard.dart';
+import 'package:agraapp/pages/farmer/notifications.dart';
+import 'package:agraapp/pages/farmer/select_farm_project.dart';
+import 'package:agraapp/pages/farmer/user_profile.dart';
+import 'package:agraapp/pages/farmer/view_farms.dart';
+import 'package:agraapp/pages/farmer/view_projects.dart';
+import 'package:flutter/material.dart';
+import 'package:agraapp/globals/globals.dart' as globals;
+
+class BottomBar extends StatefulWidget {
+  @override
+  _BottomBarState createState() => _BottomBarState();
+}
+
+class _BottomBarState extends State<BottomBar> {
+  int _selectedIndex = globals.SelectedIndexPage;
+  List<Widget> _widgetOptions = <Widget>[
+    FarmerDashboard(),
+    Notifications(),
+    FarmerProfile(),
+  ];
+
+  void _onItemTapped(int value) {
+    globals.SelectedIndexPage = value;
+    setState(() {
+      _selectedIndex = globals.SelectedIndexPage;
+    });
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => _widgetOptions.elementAt(_selectedIndex),
+        ));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+            icon: Icon(
+              Icons.dashboard,
+              size: 30,
+            ),
+            title: Container()),
+        BottomNavigationBarItem(
+            icon: Icon(
+              Icons.notifications,
+              size: 30,
+            ),
+            title: Container()),
+        BottomNavigationBarItem(
+            icon: Icon(
+              Icons.account_circle,
+              size: 30,
+            ),
+            title: Container()),
+      ],
+      currentIndex: _selectedIndex,
+      selectedItemColor: Colors.green[500],
+      backgroundColor: Colors.white,
+      unselectedItemColor: Colors.grey,
+      elevation: 5.0,
+      onTap: (value) {
+        _onItemTapped(value);
+      },
+    );
+  }
+}
